@@ -1,0 +1,132 @@
+{
+  "channels": [
+    {
+      "id": "UCY1kMZp36IQSyNx_9h4mpCg",
+      "name": "Mark Rober",
+      "description": "Former NASA engineer creating amazing science and engineering projects",
+      "category": "Science & Engineering",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_mKzklyPPhJhRMsZlMxf6w89_Vih_E_J1FczTLC=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUY1kMZp36IQSyNx_9h4mpCg"
+    },
+    {
+      "id": "UCX6OQ3DkcsbYNE6H8uQQuVA",
+      "name": "MrBeast",
+      "description": "Epic challenges, massive giveaways, and mind-blowing stunts",
+      "category": "Entertainment",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_kGa8H8AANRavSV5AGw8PX96R_FGvJt9f9JJdMN=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUX6OQ3DkcsbYNE6H8uQQuVA"
+    },
+    {
+      "id": "UCRijo3ddMTht_IHyNSNXpNQ",
+      "name": "Dude Perfect",
+      "description": "Epic trick shots, stunts, and sports entertainment",
+      "category": "Sports & Entertainment",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_lXVd0H5T_GZO7NUTx_0BQkzqYJPKPEhJXPBJXc=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UURijo3ddMTht_IHyNSNXpNQ"
+    },
+    {
+      "id": "UCHnyfMqiRRG1u-2MsSQLbXA",
+      "name": "Veritasium",
+      "description": "Science and engineering videos featuring experiments and expert interviews",
+      "category": "Science",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_mNaOтериториалBmj7fM9dJKzBjGQZC4gJHMKgUl8=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUHnyfMqiRRG1u-2MsSQLbXA"
+    },
+    {
+      "id": "UC6nSFpj9HTCZ5t-N3Rm3-HA",
+      "name": "Vsauce",
+      "description": "Mind-bending science, philosophy, and educational content",
+      "category": "Science & Education",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_kGMbeqcng2UzQXsKICJF_ycQNDT8x7vXEpKKXj=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UU6nSFpj9HTCZ5t-N3Rm3-HA"
+    },
+    {
+      "id": "UC6107grRI4m0o2-emgoDnAA",
+      "name": "SmarterEveryDay",
+      "description": "Exploring the world through science with high-speed cameras and experiments",
+      "category": "Science",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_nw-d7BEhZOzXlLlE1HKxE1XcPvKPy_VdRmLqw=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UU6107grRI4m0o2-emgoDnAA"
+    },
+    {
+      "id": "UC1VLQPn9cYSqx8plbk9RxxQ",
+      "name": "The Action Lab",
+      "description": "Exciting science experiments and demonstrations",
+      "category": "Science",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_lnY-_CZMLKHVnGG5W5Dv3E1pRKCkOXEfmVaw=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UU1VLQPn9cYSqx8plbk9RxxQ"
+    },
+    {
+      "id": "UCj1VqrHhDte54oLgPG4xpuQ",
+      "name": "Stuff Made Here",
+      "description": "Insane engineering projects and inventions",
+      "category": "Engineering",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_kZvSqPf-FmMXg3w5N4CG_-gx7wOxb7b9FJ6g=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUj1VqrHhDte54oLgPG4xpuQ"
+    },
+    {
+      "id": "UCFhXFikryT4aFcLkLw2LBLA",
+      "name": "NileRed",
+      "description": "Chemistry experiments and fascinating chemical reactions",
+      "category": "Chemistry",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_nmPmD7Hffq3K-jYSNWFUJ0qJ_G4vG-Cw8i9g=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUFhXFikryT4aFcLkLw2LBLA"
+    },
+    {
+      "id": "UCoxcjq-8xIDTYp3uz647V5A",
+      "name": "Numberphile",
+      "description": "Videos about numbers and mathematics",
+      "category": "Mathematics",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_mxI91d_QRKhjEJIxL-Hc8ZZlYU_5fMbJhp5g=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUoxcjq-8xIDTYp3uz647V5A"
+    },
+    {
+      "id": "UC7DdEm33SyaTDtWYGO2CwdA",
+      "name": "Physics Girl",
+      "description": "Physics concepts explained through fun experiments and demos",
+      "category": "Physics",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_kgFhZZEjhL5hP6-m7J7f_0WxoG6ThJFVmR9g=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UU7DdEm33SyaTDtWYGO2CwdA"
+    },
+    {
+      "id": "UCUHW94eEFW7hkUMVaZz4eDg",
+      "name": "MinutePhysics",
+      "description": "Physics and other cool stuff explained in one minute",
+      "category": "Physics",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_lAFxYy_MTCE4sxQ-CZx6Q7JXN8OtAVVm5fww=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUUHW94eEFW7hkUMVaZz4eDg"
+    },
+    {
+      "id": "UCdC0An4ZPNr_YiFiYoVbwaw",
+      "name": "Daily Dose Of Internet",
+      "description": "Curated compilations of interesting and viral videos from around the web",
+      "category": "Entertainment",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_nqbF-5wKZhYqxqKNYmjhfR_2pCMzxvq0xEYQ=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUdC0An4ZPNr_YiFiYoVbwaw"
+    },
+    {
+      "id": "UCilwZiBBfI9X6yiZRzWty8Q",
+      "name": "FaZe Rug",
+      "description": "Vlogs, challenges, and entertaining content from FaZe Clan member",
+      "category": "Entertainment & Gaming",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_mE7xXNp2x1xkzKe8jYW_hLnQqJgD7N5cR7Vg=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUilwZiBBfI9X6yiZRzWty8Q"
+    },
+    {
+      "id": "UCKqFqiCe1dCUxRe0_YNZ6gg",
+      "name": "כאן 11 - קופה ראשית",
+      "description": "Israeli comedy series and content from Kan 11",
+      "category": "Comedy",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_kbZvPXH1Y8vw2cD3KLqWxQFt5jZX9pX4wYrQ=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UUKqFqiCe1dCUxRe0_YNZ6gg"
+    },
+    {
+      "id": "UC513PdAP2-jWkJunTh5kXRw",
+      "name": "CrunchLabs",
+      "description": "Think Like an Engineer with Mark Rober's educational STEM content",
+      "category": "Education & STEM",
+      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_temp=s176-c-k-c0x00ffffff-no-rj",
+      "playlistId": "UU513PdAP2-jWkJunTh5kXRw"
+    }
+  ]
+}

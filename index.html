@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Tzoof Tube</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' rx='6' fill='url(%23gradient)'/%3E%3Cpath d='M12 9L23 16L12 23V9Z' fill='white'/%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='16' y1='0' x2='16' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23E62117'/%3E%3Cstop offset='1' stop-color='%23C9110C'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="hamburger-menu" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo" id="logo-home">
+                <div class="logo-icon">
+                    <div class="play-button"></div>
+                </div>
+                <span class="logo-text">TzoofTube</span>
+            </div>
+            <div class="watch-timer">
+                <div class="stats-segmented-control">
+                    <div class="stat-segment">
+                        <div class="stat-label">Videos</div>
+                        <div id="videos-watched" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-segment">
+                        <div class="stat-label">Watched</div>
+                        <div id="time-watched" class="stat-value">0:00</div>
+                    </div>
+                    <div class="stat-segment">
+                        <div class="stat-label">Time Left</div>
+                        <div id="time-left" class="stat-value">3:00:00</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Videos List Section (Home Feed) -->
+            <div id="videos-section" class="videos-section">
+                <h2 id="channel-title">Latest Videos</h2>
+                <div id="videos-list" class="videos-list">
+                    <!-- Videos will be dynamically added here -->
+                </div>
+                <button id="show-more-btn" class="show-more-btn hidden">Show More Videos</button>
+            </div>
+
+            <!-- Video Player Section -->
+            <div id="video-player-section" class="video-player-section hidden">
+                <button id="back-to-videos-btn" class="back-to-videos-btn">← Back to Videos</button>
+                <div class="video-player-layout">
+                    <div class="video-player-primary">
+                        <div id="video-container" class="video-container">
+                            <!-- YouTube iframe will be inserted here -->
+                        </div>
+                        <div id="video-metadata" class="video-metadata">
+                            <h1 id="video-title" class="video-title"></h1>
+                            <div class="video-stats">
+                                <span id="channel-name" class="channel-name"></span>
+                                <span class="stats-separator">•</span>
+                                <span id="view-count" class="view-count"></span>
+                                <span class="stats-separator">•</span>
+                                <span id="publish-date" class="publish-date"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-player-sidebar">
+                        <div id="suggested-videos" class="suggested-videos">
+                            <!-- Suggested videos will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Time's Up Overlay -->
+        <div id="times-up-overlay" class="times-up-overlay hidden">
+            <div class="times-up-content">
+                <div class="times-up-emoji">😊</div>
+                <div class="times-up-message">Time's up, Tzoof.</div>
+                <div class="times-up-submessage">Come back again tomorrow.</div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div id="sidebar-menu" class="sidebar-menu">
+            <div class="sidebar-header">
+                <button class="sidebar-close" id="sidebar-close">✕</button>
+                <h2>Channels</h2>
+            </div>
+            <div id="channels-list" class="channels-list">
+                <!-- Channels will be dynamically added here -->
+            </div>
+        </div>
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="app.js"></script>
+</body>
+</html>

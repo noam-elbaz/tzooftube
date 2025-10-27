@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Favicon</title>
+</head>
+<body>
+    <canvas id="canvas" width="32" height="32"></canvas>
+    <br>
+    <a id="download" download="favicon.png">Download favicon.png</a>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 0, 32);
+        gradient.addColorStop(0, '#E62117');
+        gradient.addColorStop(1, '#C9110C');
+
+        // Draw rounded rectangle background
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.roundRect(0, 0, 32, 32, 6);
+        ctx.fill();
+
+        // Draw white play triangle
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.moveTo(12, 9);
+        ctx.lineTo(23, 16);
+        ctx.lineTo(12, 23);
+        ctx.closePath();
+        ctx.fill();
+
+        // Create download link
+        canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            document.getElementById('download').href = url;
+        });
+    </script>
+</body>
+</html>
