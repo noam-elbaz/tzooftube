@@ -264,11 +264,17 @@
             try {
                 // Load config
                 const configRes = await fetch('/api/config');
+                if (!configRes.ok) {
+                    throw new Error(`Config API failed: ${configRes.status} - ${await configRes.text()}`);
+                }
                 const config = await configRes.json();
                 document.getElementById('time-limit').value = Math.floor(config.dailyTimeLimit / 60);
 
                 // Load usage
                 const usageRes = await fetch('/api/usage');
+                if (!usageRes.ok) {
+                    throw new Error(`Usage API failed: ${usageRes.status} - ${await usageRes.text()}`);
+                }
                 const usage = await usageRes.json();
 
                 document.getElementById('videos-watched').textContent = usage.videosCount || 0;
@@ -278,7 +284,13 @@
                 document.getElementById('time-remaining').textContent = formatTime(timeRemaining);
             } catch (error) {
                 console.error('Error loading settings:', error);
-                showMessage('Error loading settings', 'error');
+                showMessage(`Error: ${error.message}`, 'error');
+
+                // Set defaults on error
+                document.getElementById('time-limit').value = 180;
+                document.getElementById('videos-watched').textContent = '0';
+                document.getElementById('time-watched').textContent = '0:00';
+                document.getElementById('time-remaining').textContent = '3:00:00';
             }
         }
 
@@ -303,11 +315,13 @@
                     showMessage('Settings saved successfully!', 'success');
                     await loadSettings();
                 } else {
-                    showMessage('Error saving settings', 'error');
+                    const errorText = await response.text();
+                    console.error('Save error:', errorText);
+                    showMessage(`Error saving settings: ${response.status}`, 'error');
                 }
             } catch (error) {
                 console.error('Error saving settings:', error);
-                showMessage('Error saving settings', 'error');
+                showMessage(`Error: ${error.message}`, 'error');
             }
         });
 
