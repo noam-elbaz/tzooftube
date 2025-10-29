@@ -1,0 +1,17 @@
+{
+  "name": "tzooftube",
+  "version": "1.0.0",
+  "description": "YouTube video aggregator for kids with watch time management",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

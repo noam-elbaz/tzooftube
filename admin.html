@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TzoofTube Admin</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' rx='6' fill='url(%23gradient)'/%3E%3Cpath d='M12 9L23 16L12 23V9Z' fill='white'/%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='16' y1='0' x2='16' y2='32' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23E62117'/%3E%3Cstop offset='1' stop-color='%23C9110C'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background-color: #0f0f0f;
+            color: #f1f1f1;
+            padding: 40px 20px;
+        }
+
+        .admin-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #272727;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #272727;
+            border: 1px solid #3f3f3f;
+            border-radius: 8px;
+            color: #f1f1f1;
+            font-size: 16px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #e62117;
+        }
+
+        .time-helpers {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .time-helper-btn {
+            padding: 6px 12px;
+            background-color: #272727;
+            border: 1px solid #3f3f3f;
+            border-radius: 6px;
+            color: #aaa;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .time-helper-btn:hover {
+            background-color: #3f3f3f;
+            color: #f1f1f1;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: #e62117;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #c9110c;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: #272727;
+            margin-left: 12px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #3f3f3f;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-card {
+            background-color: #272727;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #e62117;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #1a4d1a;
+            border: 1px solid #2d7a2d;
+            color: #4ade80;
+        }
+
+        .message.error {
+            background-color: #4d1a1a;
+            border: 1px solid #7a2d2d;
+            color: #f87171;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="/" class="back-link">← Back to TzoofTube</a>
+
+        <h1>Admin Settings</h1>
+        <p class="subtitle">Manage watch time limits and view usage statistics</p>
+
+        <div id="message" class="message"></div>
+
+        <div class="card">
+            <h2>Today's Usage</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="videos-watched">0</div>
+                    <div class="stat-label">Videos Watched</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="time-watched">0:00</div>
+                    <div class="stat-label">Time Watched</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="time-remaining">3:00:00</div>
+                    <div class="stat-label">Time Remaining</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Daily Time Limit</h2>
+            <form id="config-form">
+                <div class="form-group">
+                    <label for="time-limit">Time limit (in minutes)</label>
+                    <input type="number" id="time-limit" min="0" max="480" step="15" required>
+                    <div class="time-helpers">
+                        <button type="button" class="time-helper-btn" onclick="setTimeLimit(30)">30 min</button>
+                        <button type="button" class="time-helper-btn" onclick="setTimeLimit(60)">1 hour</button>
+                        <button type="button" class="time-helper-btn" onclick="setTimeLimit(90)">1.5 hours</button>
+                        <button type="button" class="time-helper-btn" onclick="setTimeLimit(120)">2 hours</button>
+                        <button type="button" class="time-helper-btn" onclick="setTimeLimit(180)">3 hours</button>
+                        <button type="button" class="time-helper-btn" onclick="setTimeLimit(240)">4 hours</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">Save Settings</button>
+                <button type="button" class="btn btn-secondary" onclick="loadSettings()">Reset</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            return `${minutes}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function setTimeLimit(minutes) {
+            document.getElementById('time-limit').value = minutes;
+        }
+
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+
+        async function loadSettings() {
+            try {
+                // Load config
+                const configRes = await fetch('/api/config');
+                const config = await configRes.json();
+                document.getElementById('time-limit').value = Math.floor(config.dailyTimeLimit / 60);
+
+                // Load usage
+                const usageRes = await fetch('/api/usage');
+                const usage = await usageRes.json();
+
+                document.getElementById('videos-watched').textContent = usage.videosCount || 0;
+                document.getElementById('time-watched').textContent = formatTime(usage.seconds || 0);
+
+                const timeRemaining = Math.max(0, config.dailyTimeLimit - (usage.seconds || 0));
+                document.getElementById('time-remaining').textContent = formatTime(timeRemaining);
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                showMessage('Error loading settings', 'error');
+            }
+        }
+
+        document.getElementById('config-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const minutes = parseInt(document.getElementById('time-limit').value);
+            const seconds = minutes * 60;
+
+            try {
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        dailyTimeLimit: seconds
+                    })
+                });
+
+                if (response.ok) {
+                    showMessage('Settings saved successfully!', 'success');
+                    await loadSettings();
+                } else {
+                    showMessage('Error saving settings', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showMessage('Error saving settings', 'error');
+            }
+        });
+
+        // Load settings on page load
+        loadSettings();
+
+        // Refresh stats every 5 seconds
+        setInterval(loadSettings, 5000);
+    </script>
+</body>
+</html>

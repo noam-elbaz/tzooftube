@@ -1,10 +1,10 @@
 // YouTube API configuration
-const YOUTUBE_API_KEY = 'AIzaSyCISQvsNnbSZJIuYUWJjhoYSOGS_OCi6D0';
+let YOUTUBE_API_KEY = '';
 const MAX_RESULTS = 50; // Fetch 50 videos per channel (YouTube API max)
 const VIDEOS_PER_PAGE = 24;
 
 // Watch time tracking
-const DAILY_LIMIT_SECONDS = 3 * 60 * 60; // 3 hours in seconds
+let DAILY_LIMIT_SECONDS = 3 * 60 * 60; // 3 hours in seconds (will be loaded from config)
 let watchTimeSeconds = 0;
 let watchTimer = null;
 let videoStartTime = null;
@@ -33,12 +33,40 @@ const showMoreBtn = document.getElementById('show-more-btn');
 
 // Initialize the app
 async function init() {
-    loadWatchTime();
+    await loadYouTubeApiKey();
+    await loadConfig();
+    await loadWatchTime();
     await loadChannels();
     renderChannelsList();
     await loadAllVideos();
     setupEventListeners();
     updateTimerDisplay();
+}
+
+// Load YouTube API key from server
+async function loadYouTubeApiKey() {
+    try {
+        const response = await fetch('/api/youtube-key');
+        const data = await response.json();
+        YOUTUBE_API_KEY = data.apiKey;
+    } catch (error) {
+        console.error('Error loading YouTube API key:', error);
+        // Fallback for local development
+        YOUTUBE_API_KEY = 'AIzaSyCISQvsNnbSZJIuYUWJjhoYSOGS_OCi6D0';
+    }
+}
+
+// Load configuration from Vercel KV
+async function loadConfig() {
+    try {
+        const response = await fetch('/api/config');
+        const data = await response.json();
+        DAILY_LIMIT_SECONDS = data.dailyTimeLimit || 10800;
+    } catch (error) {
+        console.error('Error loading config:', error);
+        // Use default if API fails
+        DAILY_LIMIT_SECONDS = 10800;
+    }
 }
 
 // Load channels from JSON file
@@ -608,40 +636,54 @@ function getTimeAgo(date) {
 }
 
 // Watch time management functions
-function loadWatchTime() {
-    const today = new Date().toDateString();
-    const stored = localStorage.getItem('watchTimeData');
+async function loadWatchTime() {
+    try {
+        const response = await fetch('/api/usage');
+        const data = await response.json();
 
-    if (stored) {
-        const data = JSON.parse(stored);
-        if (data.date === today) {
-            watchTimeSeconds = data.seconds || 0;
-            videosWatchedCount = data.videosCount || 0;
-            countedVideos = new Set(data.countedVideos || []);
-        } else {
-            // New day, reset watch time
-            watchTimeSeconds = 0;
-            videosWatchedCount = 0;
-            countedVideos = new Set();
-            saveWatchTime();
+        watchTimeSeconds = data.seconds || 0;
+        videosWatchedCount = data.videosCount || 0;
+        countedVideos = new Set(data.countedVideos || []);
+    } catch (error) {
+        console.error('Error loading watch time:', error);
+        // Fallback to localStorage for local development
+        const stored = localStorage.getItem('watchTimeData');
+        if (stored) {
+            const data = JSON.parse(stored);
+            const today = new Date().toDateString();
+            if (data.date === today) {
+                watchTimeSeconds = data.seconds || 0;
+                videosWatchedCount = data.videosCount || 0;
+                countedVideos = new Set(data.countedVideos || []);
+            }
         }
-    } else {
-        watchTimeSeconds = 0;
-        videosWatchedCount = 0;
-        countedVideos = new Set();
-        saveWatchTime();
     }
 }
 
-function saveWatchTime() {
-    const today = new Date().toDateString();
-    const data = {
-        date: today,
+async function saveWatchTime() {
+    const usageData = {
         seconds: watchTimeSeconds,
         videosCount: videosWatchedCount,
         countedVideos: Array.from(countedVideos)
     };
-    localStorage.setItem('watchTimeData', JSON.stringify(data));
+
+    try {
+        await fetch('/api/usage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usageData)
+        });
+    } catch (error) {
+        console.error('Error saving watch time:', error);
+        // Fallback to localStorage for local development
+        const today = new Date().toDateString();
+        localStorage.setItem('watchTimeData', JSON.stringify({
+            date: today,
+            ...usageData
+        }));
+    }
 }
 
 function startWatchTimer() {
