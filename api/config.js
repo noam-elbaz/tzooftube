@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv';
+import { createClient } from '@supabase/supabase-js';
 
 export const config = {
   runtime: 'edge',
@@ -18,26 +18,44 @@ export default async function handler(req) {
   }
 
   try {
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_ANON_KEY
+    );
+
     if (req.method === 'GET') {
       // Get configuration
-      const dailyTimeLimit = await kv.get('config:dailyTimeLimit') || 10800; // Default 3 hours
-      const enabled = await kv.get('config:enabled') !== false; // Default true
+      const { data, error } = await supabase
+        .from('config')
+        .select('*')
+        .eq('key', 'daily_time_limit')
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        throw error;
+      }
+
+      const dailyTimeLimit = data?.value || 10800; // Default 3 hours
 
       return new Response(JSON.stringify({
         dailyTimeLimit,
-        enabled
+        enabled: true
       }), { status: 200, headers });
     } else if (req.method === 'POST') {
       // Update configuration
       const body = await req.json();
-      const { dailyTimeLimit, enabled } = body;
+      const { dailyTimeLimit } = body;
 
       if (dailyTimeLimit !== undefined) {
-        await kv.set('config:dailyTimeLimit', dailyTimeLimit);
-      }
+        const { error } = await supabase
+          .from('config')
+          .upsert({
+            key: 'daily_time_limit',
+            value: dailyTimeLimit,
+            updated_at: new Date().toISOString()
+          });
 
-      if (enabled !== undefined) {
-        await kv.set('config:enabled', enabled);
+        if (error) throw error;
       }
 
       return new Response(JSON.stringify({ success: true }), { status: 200, headers });
@@ -46,6 +64,9 @@ export default async function handler(req) {
     }
   } catch (error) {
     console.error('Config API error:', error);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500, headers });
+    return new Response(JSON.stringify({
+      error: 'Internal server error',
+      message: error.message
+    }), { status: 500, headers });
   }
 }

@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv';
+import { createClient } from '@supabase/supabase-js';
 
 export const config = {
   runtime: 'edge',
@@ -18,12 +18,24 @@ export default async function handler(req) {
   }
 
   try {
-    const today = new Date().toDateString();
-    const key = `usage:${today}`;
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_ANON_KEY
+    );
+
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
     if (req.method === 'GET') {
       // Get today's usage
-      const data = await kv.get(key);
+      const { data, error } = await supabase
+        .from('usage')
+        .select('*')
+        .eq('date', today)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        throw error;
+      }
 
       if (!data) {
         return new Response(JSON.stringify({
@@ -34,28 +46,41 @@ export default async function handler(req) {
         }), { status: 200, headers });
       }
 
-      return new Response(JSON.stringify(data), { status: 200, headers });
+      return new Response(JSON.stringify({
+        date: data.date,
+        seconds: data.seconds,
+        videosCount: data.videos_count,
+        countedVideos: data.counted_videos || []
+      }), { status: 200, headers });
     } else if (req.method === 'POST') {
       // Update usage
       const body = await req.json();
       const { seconds, videosCount, countedVideos } = body;
 
-      const usageData = {
-        date: today,
-        seconds: seconds || 0,
-        videosCount: videosCount || 0,
-        countedVideos: countedVideos || []
-      };
+      const { error } = await supabase
+        .from('usage')
+        .upsert({
+          date: today,
+          seconds: seconds || 0,
+          videos_count: videosCount || 0,
+          counted_videos: countedVideos || [],
+          updated_at: new Date().toISOString()
+        });
 
-      // Store with 7 day expiration
-      await kv.set(key, usageData, { ex: 604800 });
+      if (error) throw error;
 
-      return new Response(JSON.stringify({ success: true, data: usageData }), { status: 200, headers });
+      return new Response(JSON.stringify({
+        success: true,
+        data: { date: today, seconds, videosCount, countedVideos }
+      }), { status: 200, headers });
     } else {
       return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
     }
   } catch (error) {
     console.error('Usage API error:', error);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500, headers });
+    return new Response(JSON.stringify({
+      error: 'Internal server error',
+      message: error.message
+    }), { status: 500, headers });
   }
 }
