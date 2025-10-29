@@ -4,16 +4,17 @@ export const config = {
   runtime: 'edge',
 };
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json',
+  };
 
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return new Response(null, { status: 200, headers });
   }
 
   try {
@@ -25,19 +26,19 @@ export default async function handler(req, res) {
       const data = await kv.get(key);
 
       if (!data) {
-        res.status(200).json({
+        return new Response(JSON.stringify({
           date: today,
           seconds: 0,
           videosCount: 0,
           countedVideos: []
-        });
-        return;
+        }), { status: 200, headers });
       }
 
-      res.status(200).json(data);
+      return new Response(JSON.stringify(data), { status: 200, headers });
     } else if (req.method === 'POST') {
       // Update usage
-      const { seconds, videosCount, countedVideos } = req.body;
+      const body = await req.json();
+      const { seconds, videosCount, countedVideos } = body;
 
       const usageData = {
         date: today,
@@ -49,12 +50,12 @@ export default async function handler(req, res) {
       // Store with 7 day expiration
       await kv.set(key, usageData, { ex: 604800 });
 
-      res.status(200).json({ success: true, data: usageData });
+      return new Response(JSON.stringify({ success: true, data: usageData }), { status: 200, headers });
     } else {
-      res.status(405).json({ error: 'Method not allowed' });
+      return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
     }
   } catch (error) {
     console.error('Usage API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500, headers });
   }
 }
