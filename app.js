@@ -734,6 +734,7 @@ function updateTimerDisplay() {
     const timeWatchedEl = document.getElementById('time-watched');
     const timeLeftEl = document.getElementById('time-left');
     const videosWatchedEl = document.getElementById('videos-watched');
+    const statsControl = document.getElementById('stats-control');
 
     if (!timeWatchedEl || !timeLeftEl || !videosWatchedEl) return;
 
@@ -742,6 +743,11 @@ function updateTimerDisplay() {
     videosWatchedEl.textContent = videosWatchedCount;
     timeWatchedEl.textContent = formatTime(watchTimeSeconds);
     timeLeftEl.textContent = formatTime(timeLeft);
+
+    // Make stats visible after data is loaded
+    if (statsControl) {
+        statsControl.style.visibility = 'visible';
+    }
 
     // Update colors based on time left
     timeLeftEl.classList.remove('warning', 'danger');
