@@ -87,7 +87,11 @@ async function loadChannels() {
 // Fetch actual channel thumbnails from YouTube API
 async function fetchChannelThumbnails() {
     try {
-        const channelIds = channels.map(c => c.id).join(',');
+        // Only fetch thumbnails for channels, not playlists (playlists already have thumbnails)
+        const channelEntries = channels.filter(c => c.type !== 'playlist');
+        if (channelEntries.length === 0) return;
+
+        const channelIds = channelEntries.map(c => c.id).join(',');
         const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelIds}&key=${YOUTUBE_API_KEY}`;
 
         const response = await fetch(url);

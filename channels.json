@@ -113,12 +113,49 @@
       "playlistId": "UUilwZiBBfI9X6yiZRzWty8Q"
     },
     {
-      "id": "UCKqFqiCe1dCUxRe0_YNZ6gg",
-      "name": "כאן 11 - קופה ראשית",
-      "description": "Israeli comedy series and content from Kan 11",
+      "type": "playlist",
+      "id": "PL51YAgTlfPj73SHVCnwQKWNY43qvGdQZu",
+      "name": "קופה ראשית - עונה 1",
+      "description": "Israeli comedy series - Season 1",
       "category": "Comedy",
-      "thumbnail": "https://yt3.googleusercontent.com/ytc/AIdro_kbZvPXH1Y8vw2cD3KLqWxQFt5jZX9pX4wYrQ=s176-c-k-c0x00ffffff-no-rj",
-      "playlistId": "UUKqFqiCe1dCUxRe0_YNZ6gg"
+      "thumbnail": "https://i.ytimg.com/vi/-oJYZpYzxOg/default.jpg",
+      "playlistId": "PL51YAgTlfPj73SHVCnwQKWNY43qvGdQZu"
+    },
+    {
+      "type": "playlist",
+      "id": "PLLttfoK87AdUIJwIF9Zttig6sgNk5hu5W",
+      "name": "קופה ראשית - עונה 2",
+      "description": "Israeli comedy series - Season 2",
+      "category": "Comedy",
+      "thumbnail": "https://i.ytimg.com/vi/cOgDVvpz-Ww/default.jpg",
+      "playlistId": "PLLttfoK87AdUIJwIF9Zttig6sgNk5hu5W"
+    },
+    {
+      "type": "playlist",
+      "id": "PLLttfoK87AdVDPNRcYni-j0vG3OHPqRPa",
+      "name": "קופה ראשית - עונה 3",
+      "description": "Israeli comedy series - Season 3",
+      "category": "Comedy",
+      "thumbnail": "https://i.ytimg.com/vi/vPHTo9NsnNI/default.jpg",
+      "playlistId": "PLLttfoK87AdVDPNRcYni-j0vG3OHPqRPa"
+    },
+    {
+      "type": "playlist",
+      "id": "PLLttfoK87AdVhDg0tejz3xJjx8Bo3H_0c",
+      "name": "קופה ראשית - עונה 4",
+      "description": "Israeli comedy series - Season 4",
+      "category": "Comedy",
+      "thumbnail": "https://i.ytimg.com/vi/1czhcHL-YwA/default.jpg",
+      "playlistId": "PLLttfoK87AdVhDg0tejz3xJjx8Bo3H_0c"
+    },
+    {
+      "type": "playlist",
+      "id": "PLLttfoK87AdW1TI5VZVTlGvQ4LpPAiP-n",
+      "name": "קופה ראשית - עונה 5",
+      "description": "Israeli comedy series - Season 5",
+      "category": "Comedy",
+      "thumbnail": "https://i.ytimg.com/vi/iL686rbf82M/default.jpg",
+      "playlistId": "PLLttfoK87AdW1TI5VZVTlGvQ4LpPAiP-n"
     },
     {
       "id": "UC513PdAP2-jWkJunTh5kXRw",
