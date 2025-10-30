@@ -108,6 +108,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: border-color 0.2s;
+        }
+
+        .pin-display.active {
+            border-color: #e62117;
+        }
+
+        .pin-display .dot {
+            display: inline-block;
+            transition: color 0.2s;
+        }
+
+        .pin-display .dot.filled {
+            color: #e62117;
         }
 
         .number-pad {
@@ -253,6 +267,9 @@
             btn.addEventListener('click', () => {
                 const num = btn.dataset.num;
 
+                // Add active state to pin display when user clicks a number
+                pinDisplay.classList.add('active');
+
                 if (num === 'clear') {
                     pin = '';
                 } else if (num === 'back') {
@@ -266,11 +283,16 @@
         });
 
         function updatePinDisplay() {
-            if (pin.length === 0) {
-                pinDisplay.textContent = '••••';
-            } else {
-                pinDisplay.textContent = '•'.repeat(pin.length) + '•'.repeat(4 - pin.length);
+            // Create dots with individual spans for color control
+            let html = '';
+            for (let i = 0; i < 4; i++) {
+                if (i < pin.length) {
+                    html += '<span class="dot filled">•</span>';
+                } else {
+                    html += '<span class="dot">•</span>';
+                }
             }
+            pinDisplay.innerHTML = html;
         }
 
         // Handle form submission
@@ -328,6 +350,9 @@
                 errorMessage.style.animation = 'shake 0.5s';
             }, 10);
         }
+
+        // Initialize pin display with dots
+        updatePinDisplay();
 
         // Check if already logged in
         const session = localStorage.getItem('tzooftube_session');
