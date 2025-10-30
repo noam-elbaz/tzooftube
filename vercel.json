@@ -3,6 +3,7 @@
   "installCommand": "echo 'Installing dependencies...' && npm install --production",
   "buildCommand": "echo 'No build step required for static site'",
   "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/login", "destination": "/login.html" }
   ]
 }

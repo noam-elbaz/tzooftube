@@ -17,9 +17,21 @@ CREATE TABLE IF NOT EXISTS usage (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Create credentials table for login authentication
+CREATE TABLE IF NOT EXISTS credentials (
+  key TEXT PRIMARY KEY,
+  value JSONB NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Insert default configuration (3 hours = 10800 seconds)
 INSERT INTO config (key, value, updated_at)
 VALUES ('daily_time_limit', 10800, NOW())
+ON CONFLICT (key) DO NOTHING;
+
+-- Insert default credentials (username: tzofia, pin: 4545)
+INSERT INTO credentials (key, value, updated_at)
+VALUES ('user_credentials', '{"username": "tzofia", "pin": "4545"}'::jsonb, NOW())
 ON CONFLICT (key) DO NOTHING;
 
 -- Create index on usage date for faster queries
@@ -28,6 +40,7 @@ CREATE INDEX IF NOT EXISTS idx_usage_date ON usage(date);
 -- Enable Row Level Security (RLS)
 ALTER TABLE config ENABLE ROW LEVEL SECURITY;
 ALTER TABLE usage ENABLE ROW LEVEL SECURITY;
+ALTER TABLE credentials ENABLE ROW LEVEL SECURITY;
 
 -- Create policies to allow public read/write
 -- Note: For production, you should restrict these policies
@@ -45,4 +58,12 @@ CREATE POLICY "Allow public read access on usage"
 
 CREATE POLICY "Allow public write access on usage"
   ON usage FOR ALL
+  USING (true);
+
+CREATE POLICY "Allow public read access on credentials"
+  ON credentials FOR SELECT
+  USING (true);
+
+CREATE POLICY "Allow public write access on credentials"
+  ON credentials FOR ALL
   USING (true);

@@ -58,7 +58,8 @@
             color: #aaa;
         }
 
-        input[type="number"] {
+        input[type="number"],
+        input[type="text"] {
             width: 100%;
             padding: 12px;
             background-color: #272727;
@@ -68,7 +69,8 @@
             font-size: 16px;
         }
 
-        input[type="number"]:focus {
+        input[type="number"]:focus,
+        input[type="text"]:focus {
             outline: none;
             border-color: #e62117;
         }
@@ -231,6 +233,24 @@
                 <button type="button" class="btn btn-secondary" onclick="loadSettings()">Reset</button>
             </form>
         </div>
+
+        <div class="card">
+            <h2>Login Credentials</h2>
+            <form id="credentials-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pin">PIN (4 digits)</label>
+                    <input type="text" id="pin" maxlength="4" pattern="\d{4}" placeholder="Enter 4-digit PIN" required>
+                </div>
+
+                <button type="submit" class="btn">Update Credentials</button>
+                <button type="button" class="btn btn-secondary" onclick="loadCredentials()">Reset</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -325,8 +345,68 @@
             }
         });
 
+        // Load credentials
+        async function loadCredentials() {
+            try {
+                const response = await fetch('/api/auth');
+                if (!response.ok) {
+                    throw new Error(`Failed to load credentials: ${response.status}`);
+                }
+                const credentials = await response.json();
+
+                document.getElementById('username').value = credentials.username || 'tzofia';
+                document.getElementById('pin').value = credentials.pin || '4545';
+            } catch (error) {
+                console.error('Error loading credentials:', error);
+                showMessage(`Error loading credentials: ${error.message}`, 'error');
+
+                // Set defaults
+                document.getElementById('username').value = 'tzofia';
+                document.getElementById('pin').value = '4545';
+            }
+        }
+
+        // Handle credentials form submission
+        document.getElementById('credentials-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const pin = document.getElementById('pin').value;
+
+            if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
+                showMessage('PIN must be exactly 4 digits', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        newUsername: username,
+                        newPin: pin
+                    })
+                });
+
+                if (response.ok) {
+                    showMessage('Login credentials updated successfully!', 'success');
+                    await loadCredentials();
+                } else {
+                    const errorText = await response.text();
+                    console.error('Save error:', errorText);
+                    showMessage(`Error updating credentials: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error updating credentials:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        });
+
         // Load settings on page load
         loadSettings();
+        loadCredentials();
 
         // Refresh stats every 5 seconds
         setInterval(loadSettings, 5000);
