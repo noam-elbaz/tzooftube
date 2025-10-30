@@ -123,6 +123,48 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // Prevent PWA from opening Safari for any links
+        (function preventExternalNavigation() {
+            // Detect if running as PWA
+            const isStandalone = window.navigator.standalone ||
+                                 window.matchMedia('(display-mode: standalone)').matches;
+
+            if (isStandalone) {
+                // Intercept all clicks on links
+                document.addEventListener('click', (e) => {
+                    const target = e.target.closest('a');
+                    if (target && target.href) {
+                        // Only allow internal navigation
+                        const url = new URL(target.href);
+                        if (url.origin === window.location.origin) {
+                            e.preventDefault();
+                            window.location.href = target.href;
+                        } else {
+                            // Block external links completely
+                            e.preventDefault();
+                            console.log('External link blocked:', target.href);
+                        }
+                    }
+                }, true);
+
+                // Prevent window.open from opening Safari
+                const originalOpen = window.open;
+                window.open = function(url, target, features) {
+                    console.log('window.open blocked:', url);
+                    return null;
+                };
+
+                // Prevent form submissions that might open Safari
+                document.addEventListener('submit', (e) => {
+                    const form = e.target;
+                    if (form.target === '_blank' || form.target === '_top') {
+                        e.preventDefault();
+                        console.log('Form submission blocked');
+                    }
+                }, true);
+            }
+        })();
+
         // Check authentication before loading app
         (function checkAuth() {
             const session = localStorage.getItem('tzooftube_session');
