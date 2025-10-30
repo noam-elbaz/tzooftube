@@ -1,0 +1,27 @@
+{
+  "name": "TzoofTube",
+  "short_name": "TzoofTube",
+  "description": "Curated YouTube videos for kids with watch time management",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#e62117",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "entertainment"],
+  "scope": "/",
+  "id": "com.tzooftube.app"
+}
