@@ -361,7 +361,10 @@ function playVideo(video) {
             videoId: videoId,
             playerVars: {
                 autoplay: 1,
-                enablejsapi: 1
+                enablejsapi: 1,
+                rel: 0,  // Don't show related videos from other channels
+                modestbranding: 1,  // Minimize YouTube branding
+                showinfo: 0  // Hide video title and uploader (deprecated but still works)
             },
             events: {
                 onStateChange: onPlayerStateChange
@@ -371,7 +374,7 @@ function playVideo(video) {
         // Fallback to iframe if API not loaded
         videoContainer.innerHTML = `
             <iframe
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
