@@ -515,6 +515,17 @@ function setupEventListeners() {
             loadMoreVideos();
         });
     }
+
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            // Remove session from localStorage
+            localStorage.removeItem('tzooftube_session');
+            // Redirect to login page
+            window.location.href = '/login';
+        });
+    }
 }
 
 // Render channels list in sidebar
