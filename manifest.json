@@ -2,6 +2,7 @@
   "name": "TzoofTube",
   "short_name": "TzoofTube",
   "description": "Curated YouTube videos for kids with watch time management",
+  "version": "1.5.0",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f0f0f",
