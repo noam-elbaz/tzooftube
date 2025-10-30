@@ -26,6 +26,30 @@ export default async function handler(req) {
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
     if (req.method === 'GET') {
+      // Check if requesting historical data
+      const url = new URL(req.url);
+      const days = url.searchParams.get('days');
+
+      if (days) {
+        // Get last N days of usage
+        const daysNum = parseInt(days);
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - daysNum);
+        const startDateStr = startDate.toISOString().split('T')[0];
+
+        const { data, error } = await supabase
+          .from('usage')
+          .select('*')
+          .gte('date', startDateStr)
+          .order('date', { ascending: true });
+
+        if (error) throw error;
+
+        return new Response(JSON.stringify({
+          history: data || []
+        }), { status: 200, headers });
+      }
+
       // Get today's usage
       const { data, error } = await supabase
         .from('usage')
