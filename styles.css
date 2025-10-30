@@ -569,10 +569,9 @@ header {
     width: 100%;
     height: 100%;
     border: none;
-    pointer-events: none;
 }
 
-/* Completely block all clicks/touches on the video player */
+/* Add clickable overlay for play/pause control */
 .video-container::after {
     content: '';
     position: absolute;
@@ -583,7 +582,7 @@ header {
     pointer-events: auto;
     z-index: 10;
     background: transparent;
-    cursor: default;
+    cursor: pointer;
 }
 
 /* Video Metadata */
