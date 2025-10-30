@@ -33,6 +33,9 @@ const showMoreBtn = document.getElementById('show-more-btn');
 
 // Initialize the app
 async function init() {
+    // Show loading message immediately
+    videosList.innerHTML = '<div class="loading">Loading videos...</div>';
+
     await loadYouTubeApiKey();
     await loadConfig();
     await loadWatchTime();
