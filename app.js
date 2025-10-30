@@ -399,6 +399,26 @@ function playVideo(video) {
     videosSection.classList.add('hidden');
     videoPlayerSection.classList.remove('hidden');
 
+    // Add click handler to video container for play/pause
+    const container = document.querySelector('.video-container');
+    if (container) {
+        // Remove any existing click handlers
+        const newContainer = container.cloneNode(true);
+        container.parentNode.replaceChild(newContainer, container);
+
+        // Add new click handler
+        newContainer.addEventListener('click', () => {
+            if (player && player.getPlayerState) {
+                const state = player.getPlayerState();
+                if (state === 1) { // Playing
+                    player.pauseVideo();
+                } else if (state === 2 || state === 5) { // Paused or Cued
+                    player.playVideo();
+                }
+            }
+        });
+    }
+
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
