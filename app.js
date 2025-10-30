@@ -364,7 +364,11 @@ function playVideo(video) {
                 enablejsapi: 1,
                 rel: 0,  // Don't show related videos from other channels
                 modestbranding: 1,  // Minimize YouTube branding
-                showinfo: 0  // Hide video title and uploader (deprecated but still works)
+                showinfo: 0,  // Hide video title and uploader (deprecated but still works)
+                iv_load_policy: 3,  // Disable annotations
+                disablekb: 0,  // Keep keyboard controls
+                fs: 1,  // Allow fullscreen
+                playsinline: 1  // Play inline on iOS
             },
             events: {
                 onStateChange: onPlayerStateChange
@@ -374,9 +378,10 @@ function playVideo(video) {
         // Fallback to iframe if API not loaded
         videoContainer.innerHTML = `
             <iframe
-                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
+                allowfullscreen
+                sandbox="allow-same-origin allow-scripts allow-presentation">
             </iframe>
         `;
     }
