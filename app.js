@@ -399,27 +399,6 @@ function playVideo(video) {
     videosSection.classList.add('hidden');
     videoPlayerSection.classList.remove('hidden');
 
-    // Add click handler to video container for play/pause
-    // We need to wait for the container to be ready
-    setTimeout(() => {
-        const container = document.querySelector('.video-container');
-        if (container) {
-            container.onclick = (e) => {
-                // Only handle clicks on the overlay (::after pseudo-element shows as container click)
-                if (e.target === container) {
-                    if (player && player.getPlayerState) {
-                        const state = player.getPlayerState();
-                        if (state === 1) { // Playing
-                            player.pauseVideo();
-                        } else if (state === 2 || state === 5 || state === -1) { // Paused, Cued, or Unstarted
-                            player.playVideo();
-                        }
-                    }
-                }
-            };
-        }
-    }, 500);
-
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
